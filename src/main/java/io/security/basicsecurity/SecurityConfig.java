@@ -27,7 +27,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated(); // 모든 요청에 대해 인증 받기
         http // 인증
                 .formLogin() //폼 로그린
-                .loginPage("/loginPage")
+//                .loginPage("/loginPage")
                 .defaultSuccessUrl("/")
                 .failureUrl("/login")
                 .usernameParameter("userId") //프론트와 맞춰야함
@@ -68,5 +68,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     }
                 })
                 .deleteCookies("remember-me");
+
+        http.rememberMe() // remember-me 기능 활성화
+                .rememberMeParameter("remember") //기본파라미터명은 remember-me
+                .tokenValiditySeconds(3600) // Default는 14일
+                .alwaysRemember(true) // 리멤버미 기능이 활성화되있지 않아도 항상 실행
+                .userDetailsService(userDetailsService());
     }
 }
